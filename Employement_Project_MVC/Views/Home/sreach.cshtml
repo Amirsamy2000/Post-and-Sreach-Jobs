@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Employement_Project_MVC.Models.Job>
+
+@{
+    ViewBag.Title = "sreach";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+<div class="panel panel-default" style="padding:20px">
+    <h2 class="panel-heading">نتائج البحث</h2>
+</div>
+    <div class="container">
+
+
+        <div class="Row">
+
+            @foreach (var subitem in Model)
+            {
+
+
+                <div class="col-sm-3 ">
+                    <img src="~/Uploads/@subitem.JobImage" class="image_job_desin" width="300" height="100" />
+                    <p>@subitem.SreachEngigJob</p>
+                    <div class="header_job">@subitem.cat.CategoryName/ @subitem.JobTtile</div>
+                    <h4>تبدا من :@subitem.MinPrice$ الي :@subitem.MaxPrice$ </h4>
+                    @Html.ActionLink("تفاصيل", "Details", new { id = subitem.Id }, new { @class = "btn btn-primary" })
+
+
+                </div>
+            }
+
+
+
+
+
+
+
+
+
+        </div>
+
+    </div>
+

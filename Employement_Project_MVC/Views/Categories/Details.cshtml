@@ -1,0 +1,35 @@
+﻿@model Employement_Project_MVC.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>تفاصيل عن النوع</h2>
+
+<div>
+    <h4>النوع</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryDiscraption)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryDiscraption)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("تعديل", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("العوجة للقائمة ", "Index")
+</p>

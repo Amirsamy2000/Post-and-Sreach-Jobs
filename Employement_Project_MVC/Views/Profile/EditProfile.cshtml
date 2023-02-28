@@ -1,0 +1,184 @@
+﻿@model Employement_Project_MVC.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "EditProfile";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<center>
+
+    @using (Html.BeginForm("EditProfile","profile", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+
+        <div class="form-horizontal">
+            <div class="panel panel-body panel_edit_profile">
+             <div class="FormProfileEdit">
+                 <div>
+                     <img src="~/Uploads/@Model.PathImage" width="100" height="100" id="profileImage" />
+
+
+
+                     <h3>@Model.UserType</h3>
+                     <p>@Model.Email</p>
+                     <label for="imageEdit">تغير الصورة الشخصية  </label>
+                    <input type="file"  class="btn-warning" name="imageEdit" id="imageEdit"  />
+                 </div>
+                 <br />
+                  <div id="eroo">
+
+                  </div>
+             
+                 <center>
+                    
+                     <hr />
+                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                     @Html.HiddenFor(model => model.Id)
+
+
+                     <div class="form-group">
+                         <div class="col-md-12">
+                             @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "true", placeholder = "البريد الالكتروني" } })
+                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                         </div>
+                     </div>
+
+
+                     <div class="form-group">
+                         <div class="col-md-12">
+                             @Html.EditorFor(model => model.UserType, new { htmlAttributes = new { @class = "form-control", @readonly = "true", placeholder = "البريد الالكتروني" } })
+                             @Html.ValidationMessageFor(model => model.UserType, "", new { @class = "text-danger" })
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <div class="col-md-12">
+                             @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "اسم المستخدم" } })
+                             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                         </div>
+                     </div>
+
+                     <div class="form-group">
+                         <div class="col-md-12">
+                             @Html.DropDownList("Country", null, "البلد", new { @class = "form-control", placeholder = "البلد" ,id= "countries" })
+                             @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <div class="col-md-3">
+                             <input type="text" readonly id="code" value="+20" class="form-control code" style="width:90px" name="code" />
+
+                         </div>
+                         <div class="form-group">
+                             <div class="col-md-9">
+                                 @Html.EditorFor(model => model.PhoneVisitor, new { htmlAttributes = new { @class = "form-control", placeholder = "رقم الهاتف" } })
+                                 @Html.ValidationMessageFor(model => model.PhoneVisitor, "", new { @class = "text-danger" })
+                             </div>
+
+                         </div>
+
+                         <div class="password">
+                             <div class="form-group">
+                                 <div class="col-md-12 ">
+
+                                     @Html.Editor("CurrentPassword", new { htmlAttributes = new { @class = "form-control", placeholder = "كلمة السر الحالية" } })
+                                     @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
+                                     <div id="current">
+                                         @ViewBag.Message
+                                     </div>
+                                 </div>
+                             </div>
+
+                             <div class="form-group">
+                                 <div class="col-md-12">
+                                     @Html.Editor("NewPassword", new { htmlAttributes = new { @class = "form-control", id = "NewPassword", placeholder = "كلمة السر الجديدة" } })
+                                     @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
+                                 </div>
+                             </div>
+
+                             <div class="form-group">
+                                 <div class="col-md-12">
+                                     @Html.Editor("ConfirmPassword", new { htmlAttributes = new { @class = "form-control", id = "Confirm", placeholder = "تاكيد كلمة السر" } })
+                                 </div>
+                             </div>
+                             <div class="col-md-10" id="erro">
+
+                             </div>
+                         </div>
+                         <div class="form-group">
+                             <div class="col-md-offset-2 col-md-10">
+                                 <input type="submit" value="حفظ العديلات" class="btn btn-primary" id="Edit" />
+                             </div>
+                         </div>
+                     </div>
+                 </center>
+             </div>
+            </div>
+        </div>
+
+    }
+
+</center>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+    <script>
+        document.getElementById("countries").onchange = function (event) {
+            if (document.getElementById("countries").value == "مصر") {
+                document.getElementById("code").value = "+20";
+            }
+            if (document.getElementById("countries").value == "الامارات") {
+                document.getElementById("code").value = "+971";
+            }
+            if (document.getElementById("countries").value == "الكويت") {
+                document.getElementById("code").value = "+965";
+            }
+            if (document.getElementById("countries").value == "السعودية") {
+                document.getElementById("code").value = "+1";
+            }
+            else {
+
+            }
+        }
+   
+        var VialdExImage = ['png', 'jpg', 'gif', 'bmp'];
+    
+        document.getElementById("Edit").onclick = function (event) {
+            var confirm = document.getElementById("Confirm").value;
+            var ImageEx = document.getElementById("imageEdit").value;
+            var newPassword = document.getElementById("NewPassword").value;
+            if (confirm !== newPassword) {
+                event.preventDefault();
+                document.getElementById("erro").innerHTML =
+                    "<div class='panel  panel-danger text-center text-danger'>كلمات السر غير متطابقة </div>"
+            }
+           
+            //if (VialdExImage.includes(ImageEx.substr(-3))) {
+            //    event.preventDefault();
+            //    console.log(document.getElementById("imageEdit").files[0].name)
+            //    document.getElementById("profileImage").setAttribute("src", document.getElementById("imageEdit").files[0].name)
+
+            //}
+
+        }
+
+        //document.getElementById("imageEdit").onblur = function () {
+
+        //    if (!VialdExImage.includes(ImageEx.substr(-3))) {
+        //        console.log(ImageEx.substr(-3))
+        //        document.getElementById("imageEdit").value = "";
+        //        document.getElementById("eroo").innerHTML =
+        //            "<div class='text-danger text-center '>يجب نحميل صورة  وليس ملف</div>"
+        //    }
+        //    else {
+                        //        document.getElementById("imageEdit").setAttribute("src", document.getElementById("imageEdit").value)
+
+        //    }
+        //}
+        document.getElementById("current").onchange = function () {
+            document.getElementById("current").className ="panel  panel-danger text-center text-danger"
+        }
+
+
+    </script>

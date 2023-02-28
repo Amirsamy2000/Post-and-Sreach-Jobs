@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Employement_Project_MVC.Models.JobsViewModel>
+@{
+    ViewBag.Title = "GetJobPublisher";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@foreach (var item in Model)
+{
+    <table class="table table-bordered table-stripped table-hover">
+
+        <caption><h3 style="background-color:aliceblue ;padding:10px;width:100px">@item.JobTitle</h3></caption>
+        <tr>
+            <th>اسم الباحث</th>
+            <th>نص الرساله</th>
+            <th>تاريخ الارسال</th>
+        </tr>
+        @foreach (var suitem in item.Applies)
+        {
+    <tr>
+        <td>@suitem.user.UserName</td>
+        <td>@suitem.Message</td>
+        <td>@suitem.AplayOn</td>
+
+    </tr>
+
+        }
+
+
+
+    </table>
+
+}
+

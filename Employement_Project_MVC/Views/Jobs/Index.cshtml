@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Employement_Project_MVC.Models.Job>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+}
+<div class="panel panel-info panel-heading">
+    <center><h1>Control Panel Admin</h1></center>
+</div>
+
+<h2>قائمة الوظائف الجديدة</h2>
+
+<hr />
+
+<a  class=" CreateJob_addmin btn_show " href="~/Jobs/Create">انشاء وظيفة</a>
+<hr />
+
+<table class="table table-stripped table-bordered table-hover " style="font-size:20px">
+ 
+    <tr class="warning">
+        <th>
+            @Html.DisplayNameFor(model => model.cat.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobTtile)
+        </th>
+    <th>
+        @Html.DisplayNameFor(model=>model.SreachEngigJob)
+    </th>
+        <th>
+           السعر
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobImage)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr class="success">
+    <td>
+        @Html.DisplayFor(modelItem => item.cat.CategoryName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.JobTtile)
+    </td>
+    <td>
+        @Html.DisplayFor(model=>item.SreachEngigJob)
+    </td>
+    <td>
+        من :@item.MinPrice$/@item.MaxPrice$ 
+    </td>
+    <td>
+        <img src="~/Uploads/@Html.DisplayFor(modelItem => item.JobImage)" class="thumbnail" style="width:50px;height:50px" />
+
+    </td>
+    <td  class="btn-admins">
+        @Html.ActionLink("تعديل", "Edit", new { id = item.Id }, new { @class = "btn btn-success  "}) 
+        @Html.ActionLink("تفاصيل", "Details","Home", new { id = item.Id }, new { @class = "btn btn-info " }) 
+        @Html.ActionLink("حذف", "Delete", new { id = item.Id }, new {@class="btn btn-danger  "})
+    </td>
+</tr>
+    }
+
+</table>

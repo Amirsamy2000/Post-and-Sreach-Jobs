@@ -1,0 +1,131 @@
+﻿@model Employement_Project_MVC.Models.RegisterViewModel
+@{
+    ViewBag.Title = "الاشتراك";
+}
+
+<body class="body_register">
+    <center>
+       
+        <div class="main1">
+            <div class="form-horizontal erro_vaild">
+                <div class="alert alert-danger" id="erro" style="display:none">
+                    <span id="view-erro"></span>
+                </div>
+            </div>
+            <div>
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+
+                    @Html.AntiForgeryToken()
+                    <h3>انشاء حساب جديد</h3>
+                    <hr />
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <div class="form-group">
+
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "اسم المستخدم" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.DropDownList("UserType", null, new { @class = "form-control", placeholder = "نوع النستخدم", enctype = "multipart/form-data" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-md-12">
+                            <input type="file" name="PathImage" class="form-control" id="image" />
+                            @Html.ValidationMessageFor(model => model.PathImage, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-md-12">
+                            @Html.DropDownList("Country", null, new { @class = "form-control", placeholder = "نوع النستخدم", id = "countries" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2">
+                            <input type="text" readonly id="code" value="+20" class="form-control code" style="width:90px" name="code" />
+
+                        </div>
+                        <div class="col-lg-10">
+                            @Html.TextBoxFor(model => model.PnoneVisitor, new { @class = "form-control", placeholder = "رقم الهاتف", type = "number" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "البريد الالكتروني" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-md-12">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "كلمة السر" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "تاكيد كلمة السر" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class=" col-md-12">
+                            <input type="submit" class="btn btn-default btn-block btn_hover" value="تسجيل" id="btn_hover" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </center>
+    <script>
+        document.getElementById("countries").onchange = function (event) {
+            if (document.getElementById("countries").value == "مصر") {
+                document.getElementById("code").value = "+20";
+            }
+            if (document.getElementById("countries").value == "الامارات") {
+                document.getElementById("code").value = "+971";
+            }
+            if (document.getElementById("countries").value == "الكويت") {
+                document.getElementById("code").value = "+965";
+            }
+            if (document.getElementById("countries").value == "السعودية") {
+                document.getElementById("code").value = "+1";
+            }
+            else {
+
+            }
+        }
+        document.getElementById("btn_hover").onclick = function (event) {
+            var imageValue = document.getElementById("image").value;
+            if (imageValue == "") {
+                event.preventDefault();
+                document.getElementById("erro").style.display = "";
+                document.getElementById("erro").textContent = "الرجاء اختيار صورة";
+            }
+            else {
+                var imageEx = ['png', 'jpg', 'gif', 'bmp'];
+                if (!imageEx.includes(imageValue.substr(-3))) {
+                    event.preventDefault();
+                    document.getElementById("erro").style.display = "";
+                    document.getElementById("erro").textContent = "الرجاء اختيار صورة ذات امتداد 'png', 'jpg', 'gif', 'bmp' ";
+                }
+                var imageSize = document.getElementById("image").files[0].size / 1024 / 1024;
+                if (imageSize > 1) {
+                    event.preventDefault();
+                    document.getElementById("erro").style.display = "";
+                    document.getElementById("erro").textContent = "الرجاء اختيار صورة لا تزيد عن 1 ميجا ";
+                }
+                
+            }
+
+        }
+
+    </script>
+</body>

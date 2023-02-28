@@ -1,0 +1,91 @@
+﻿@model Employement_Project_MVC.Models.Job
+@if ((Session["Visitor"] as Employement_Project_MVC.Models.ApplicationUser).UserType == "admins")
+{
+    <div class="panel panel-info panel-heading">
+        <center><h1>Control Panel Admin</h1></center>
+    </div>
+
+}
+<div class="Contianer_Detials">
+    <div class="container">
+        <div class="Row">
+            <div class="panel panel-info panel_detials">
+                <h2>@Model.SreachEngigJob</h2>
+                <p>@Model.cat.CategoryName/@Model.JobTtile </p>
+            </div>
+            <hr />
+            <div class="col-sm-9 detials_div ">
+                <div class="">
+                    <img src="~/Uploads/@Html.DisplayFor(model => model.JobImage) " class="detials_img" />
+                    <hr />
+                    <hr />
+                    <p>@Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => model.JobContent).ToString()))</p>
+
+                    @if ((Session["Visitor"] as Employement_Project_MVC.Models.ApplicationUser).UserType == "admins")
+                    {
+                        @Html.ActionLink("     تعديل    ", "Edit", "Jobs", new { id = Model.Id }, new { @class = "btn btn-warning btn-block" })
+
+                     <a href="~/Jobs/Index" class="btn btn-success btn-block">العودة للقائمة  </a>
+
+                        @Html.ActionLink("     حذف الوظيفة    ", "Delete", "Jobs", new { id = Model.Id }, new { @class = "btn btn-danger btn-block" })
+
+                    }
+                    else
+                    {
+                        @Html.ActionLink("     التقديم لهذة الوظيفة    ", "Applay", new { id = Model.Id }, new { @class = "btn btn-success btn-block" })
+
+
+                    }
+
+                    <br /><br />
+
+                </div>
+            </div>
+            <div class="col-sm-3 detials_div">
+                @if ((Session["Visitor"] as Employement_Project_MVC.Models.ApplicationUser).UserType == "admins")
+                {
+
+
+                }
+                else
+                {
+                    <a href="~/Home/Index" class="btn btn-danger btn-block"> العودة للقائمة</a>
+
+                }
+
+
+                <br />
+                <div class="profile">
+                    <p>بيانات الوظيفة</p>
+                    <hr />
+                    <p>الوظيفة:  <span class="data_profile">      @Model.JobTtile</span></p>
+                    <p>سعر الوظيفة يبدا من:  <span class="data_profile">      @Model.MinPrice$</span></p>
+                    <p>الحد الاقصي للسعر:  <span class="data_profile">      @Model.MaxPrice$</span></p>
+                    <p>عدد المشتركين:  <span class="data_profile">      5</span></p>
+                    <hr />
+                    <p>ناشر الوظيفة</p>
+                    <hr />
+
+
+                    <p class=""> <img src="~/Uploads/@ViewBag.PublisherJob.PathImage" alt="Avatar" class="avatar  profile_publisher">@ViewBag.PublisherJob.UserName</p>
+                    <p>البلد:  <span class="data_profile">@ViewBag.PublisherJob.Country</span></p>
+                    <p> الايميل:<span class="Email">@ViewBag.PublisherJob.Email</span></p>
+                    @if ((Session["Visitor"] as Employement_Project_MVC.Models.ApplicationUser).UserType != "admins")
+                    {
+                        <center>
+                            <a href="#" class="btn bbtn-block btn_show">تواصل</a>
+                        </center>
+                    }
+                    <hr style=" width: 70%; background-color: blueviolet; border-width: 5px; " />
+                    @*<center>
+                        <p>مسا</p>
+                        <h3>Amir Samy</h3>
+                        <img src="~/Uploads/pro.jpg" height="250" />
+                    </center>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,45 @@
+﻿@model Employement_Project_MVC.Models.ApplayForJob
+
+@{
+    ViewBag.Title = "DetialsJob";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>معلومات الوظيفة</h2>
+
+<div>
+    <h4>تفاصيل الوظيفة المتقدم اليها</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Message)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AplayOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AplayOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.job.JobTtile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.job.JobTtile)
+        </dd>
+
+       
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("تعديل", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("العودة للقائمة الرئيسية", "GetJob")
+</p>

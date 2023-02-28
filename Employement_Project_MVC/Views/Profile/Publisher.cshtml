@@ -1,0 +1,198 @@
+﻿@model Employement_Project_MVC.Models.ApplicationUser
+@{
+    ViewBag.Title = "Publisher";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<div>
+    <div class="container" style="width:100%">
+        <div class="row">
+
+     
+
+            <div class="col-sm-3">
+                <div class="panel panel-body">
+                    <div class="profile_me">
+                        <img src="~/Uploads/@Model.PathImage" class="avatar_profile" />
+                        <h1>@Model.UserName</h1>
+                        <hr />
+                        <p>@Model.UserType / @Model.Country</p>
+
+                        <p>@Model.PhoneVisitor</p>
+
+                        <p>@Model.Email</p>
+                        <center>
+                            <a class="btn  btn-block btn_show" href="/Account/EditUserProfile/@Model.Id">تعديل </a>
+                        </center>
+                        <hr />
+
+                        <div class="Link_Cats">
+                            <center id="div_Cats">
+                                @foreach (var item in ViewBag.Cat)
+                                {
+                                    <div class="links_cat" id="@item.Id"><a class="Job_Cats" href="#">@item.CategoryName</a></div>
+                                }
+                            </center>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="profile_jobs" class="col-sm-9  panel-body">
+               
+                <div class="panel panel-body col-sm-10">
+                    <div class="col-sm-10 headingpanelJob panel-body ">
+                        <p class="panel panel-info panel-success text-center text-info headingpanelJob" id="pael_Jobs" style="padding-top:10px">جميع الوظائف التي قمت بنشرها</p>
+
+                    </div>
+                    <center style="margin-top:6px">
+                        <a class="btn  btn-primary " href="/Jobs/Create" > نشر وظيفة </a>
+                    </center>
+                </div>
+                <div id="notFound"></div>
+                <div class="panel panel-body">
+                    <div class="row" id="row">
+
+
+                    </div>
+                    <div id="LoadingApplies" style="display:none">
+                        <center><img src="~/Content/images/loading.gif" width="100" height="100" /></center>
+                    </div>
+                    <div id="Applies">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+   
+    function ClearResult() {
+        document.getElementById("EmployeeDiv").innerHTML = ""
+    }
+    function succ() {
+        window.scrollBy(0, document.body.scrollHeight)
+        document.getElementById("LoadingApplies").style.display="none"
+    }
+    function CancelResult() {
+       
+    }
+    document.body.onload = function () {
+        $.ajax({
+            url: "/Profile/loadJobs",
+            data: {},
+            success: function (data) {
+                $("#row").empty()
+
+                $.each(data, function (index, row) {
+                    if (row.empty) {
+                        $("#pael_Jobs").text("لاتوجد وظايف ")
+                    }
+                    else {
+
+                        $("#pael_Jobs").text("الوظائف التي قمت بنشرها ")
+
+                        $("#row")
+
+                            .append(
+                                "<div class='col-sm-4 job_inline' id='content' >"
+                                +
+                                "<img src='/Uploads/" + row.JobImage + "'  style=' float: left; display: block; margin-top: 10px ' width='70' height='80' " + "/>"
+                                + " <h3> الوظيفة:" + row.JobTtile + "</h3>" +
+                                "</hr>" +
+                                " <p>" + row.SreachEngigJob + "</p>" +
+                                " <h4> السعر:" + row.MinPrice + "$" + "/" + row.MaxPrice + "$" + "</h4>" +
+                                "  <center style='margin-bottom: 8px'>" +
+                                " <a class='btn btn-warning' href='/Jobs/Edit/" + row.Id + "'>تعديل</a>" +
+                                " <a class='btn btn-danger' href='/Jobs/Delete/" + row.Id + "'>حذف</a>" +
+
+                                //"<a data-ajax='true' data-ajax-loading='LoadingApplies' data-ajax-method='Get' data-ajax-mode='replace' data-ajax-update='#Applies' href = '/Profile/AppliesForJob_Profile' > المتقدمين</a >"
+
+
+
+                                "  <a class='btn btn-info' href='/Home/Details/" + row.Id + "' id='after'>تفاصيل</a>" +
+                                "<hr/>" +
+                                " <a data-ajax='true' data-ajax-begin='CancelResult' data-ajax-loading='#LoadingApplies' data-ajax-method='Get' data-ajax-mode='replace' data-ajax-loading-duration='3000''data-ajax-success='succ' data-ajax-update='#Applies' href='/Profile/Applies_Profile/" + row.Id + "' class='btn btn-success btn-block'>المتقدمين</a>" +
+                                "  </center>" +
+                                "</div>"
+
+                            )
+
+                    }
+                })
+            }
+        })
+    }
+    $(function () {
+    
+        var all_divs = document.getElementById("div_Cats").children
+
+        for (let i = 0; i < all_divs.length; i++) {
+
+            all_divs[i].onclick = function () {
+                document.getElementById("Applies").innerHTML = " ";
+               
+                $.ajax({
+                    url: "/Profile/DataJobs",
+                    data: { id: Number(all_divs[i].getAttribute("id")) },
+                    success: function (data) {
+                        $("#row").empty()
+                        if (data.length==0) {
+                            $("#pael_Jobs").text("لاتوجد وظايف ")
+                        }
+                        
+                        else {
+                        $.each(data, function (index, row) {
+                          
+                           
+
+                                $("#pael_Jobs").text("الوظائف التي قمت بنشرها")
+
+                                $("#row")
+
+                                    .append(
+                                        "<div class='col-sm-4 job_inline' id='content' >"
+                                        +
+                                        "<img src='/Uploads/" + row.JobImage + "'  style=' float: left; display: block; margin-top: 10px ' width='70' height='80' " + "/>"
+                                        + " <h3> الوظيفة:" + row.JobTtile + "</h3>" +
+                                        "</hr>" +
+                                        " <p>" + row.SreachEngigJob + "</p>" +
+                                        " <h4> السعر:" + row.MinPrice + "$" + "/" + row.MaxPrice + "$" + "</h4>" +
+                                        "  <center style='margin-bottom: 8px'>" +
+                                        " <a class='btn btn-warning' href='/Jobs/Edit/" + row.Id + "'>تعديل</a>" +
+                                        " <a class='btn btn-danger' href='/Jobs/Delete/" + row.Id + "'>حذف</a>" +
+
+                                        //"<a data-ajax='true' data-ajax-loading='LoadingApplies' data-ajax-method='Get' data-ajax-mode='replace' data-ajax-update='#Applies' href = '/Profile/AppliesForJob_Profile' > المتقدمين</a >"
+
+
+
+                                        "  <a class='btn btn-info' href='/Home/Details/" + row.Id + "' id='after'>تفاصيل</a>" +
+                                        "<hr/>" +
+                                        " <a data-ajax='true' data-ajax-begin='CancelResult' data-ajax-loading='#LoadingApplies' data-ajax-method='Get' data-ajax-mode='replace' data-ajax-loading-duration='3000''data-ajax-success='succ' data-ajax-update='#Applies' href='/Profile/Applies_Profile/"+row.Id+"' class='btn btn-success btn-block'>المتقدمين</a>" +
+                                        "  </center>" +
+                                        "</div>"
+
+                                )
+                             
+
+                            }
+                            )
+                        }
+                    }
+                })
+
+            }
+
+        }
+ 
+
+    })
+
+</script>
+
+

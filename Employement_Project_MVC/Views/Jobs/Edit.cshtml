@@ -1,0 +1,139 @@
+﻿@model Employement_Project_MVC.Models.Job
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<h2>تعديل بيانات وظيفة</h2>
+
+@using (Html.BeginForm("Edit", "Jobs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+<div class="form-horizontal">
+    <div class="alert alert-danger" id="erro" style="display:none">
+        <span id="view-erro"></span>
+    </div>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.JobTtile, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.JobTtile, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.JobTtile, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <p id="text"></p>
+    <div class="form-group">
+        @Html.LabelFor(model => model.SreachEngigJob, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SreachEngigJob, new { htmlAttributes = new { @class = "form-control", id = "TitleSreach" } })
+            @Html.ValidationMessageFor(model => model.SreachEngigJob, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+            @Html.LabelFor(model => model.JobContent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.JobContent, new { htmlAttributes = new { @class = "form-control", id = "JobContent" } })
+                @Html.ValidationMessageFor(model => model.JobContent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.JobImage, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="file" name="upload" class="form-control" id="image" />
+            @*@Html.EditorFor(model => model.JobImage, new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.ValidationMessageFor(model => model.JobImage, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.MinPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.MinPrice, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(model => model.MinPrice, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.Label("الي", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.TextBoxFor(model => model.MaxPrice, new { @class = "form-control", type = "number" })
+                @Html.ValidationMessageFor(model => model.MaxPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.CategoryId, "نوع الوظيفة", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-4">
+            <input type="submit" value="حفظ التعديلات" class="btn btn-warning btn-block" id="checkImage" />
+
+        </div>
+
+    </div>
+   
+</div>
+
+}
+
+<div class="back" >
+    <a class="btn btn-danger btn-block" href="~/Jobs/Index">العودة للقائمة</a>
+   
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $("#checkImage").click(function () {
+                $("#view-erro").empty();
+                //if ($("#image").val() == "") {
+                //    $("#erro").fadeIn();
+                //    $("#view-erro").append("رجاء تحميل صورة حتي يتم اكمال المهمة");
+
+                //    return false;
+                //}
+                var imageex = ['png', 'jpg', 'bmp', 'gif']
+                var ex = $("#image").val().substr($("#image").val().lastIndexOf('.') + 1)
+                if ($.inArray(ex, imageex) == -1) {
+                    $("#erro").fadeIn();
+                    $("#view-erro").append("رجاء اختار صورة فقط وليس ملف");
+                    return false;
+                }
+                var size = document.getElementById("image").files[0].size / 1024 / 1024;
+                if (size > 1) {
+                    $("#erro").fadeIn();
+                    $("#view-erro").append("رجاء اختار صورةلاتزيد عن 2 ميجا");
+                    return false;
+                }
+
+            })
+
+
+        })
+        CKEDITOR.replace("JobContent")
+        document.getElementById("TitleSreach").onblur = function (event) {
+            var title = document.getElementById("TitleSreach").value
+            if (title.length > 35) {
+                document.getElementById("TitleSreach").style.color = "red";
+                document.getElementById("text").textContent = "ادخل اقل من 35 حرف"
+                document.getElementById("text").style.color = "red";
+                document.getElementById("text").style.marginRight = "200px"
+                document.getElementById("TitleSreach").focus;
+            }
+            else {
+                document.getElementById("TitleSreach").style.color = "";
+                document.getElementById("text").textContent = ""
+                document.getElementById("text").style.color = "red";
+            }
+        }
+
+    </script>
+}

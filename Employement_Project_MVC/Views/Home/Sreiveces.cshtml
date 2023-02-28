@@ -1,0 +1,55 @@
+﻿@model Employement_Project_MVC.Models.Category
+@{
+    ViewBag.Title = "Sreiveces";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+
+
+    <div class=""><h1>خدمات @Model.CategoryName</h1></div>
+
+    <div class=" panel panel-body">
+        <center class="head_tex">
+            <h4> @Model.CategoryDiscraption</h4>
+            <hr style=" width: 70%; background-color: blueviolet; border-width: 5px; " />
+
+        </center>
+    </div>
+
+       
+<div class="container">
+
+
+                <div class="Row">
+
+                    @foreach (var subitem in Model.Jobs)
+                    {
+
+
+                        <div class="col-sm-3 ">
+                            <img src="~/Uploads/@subitem.JobImage" class="image_job_desin" width="300" height="100" />
+                            <p>@subitem.SreachEngigJob</p>
+                            <div class="header_job">@Model.CategoryName / @subitem.JobTtile</div>
+                            <h4>تبدا من :@subitem.MinPrice$ الي :@subitem.MaxPrice$ </h4>
+                            @Html.ActionLink("تفاصيل", "Details", new { id = subitem.Id }, new { @class = "btn btn-primary" })
+
+
+                        </div>
+                    }
+
+
+
+
+
+
+
+
+
+                </div>
+
+            </div>            
+       
+   
+
+

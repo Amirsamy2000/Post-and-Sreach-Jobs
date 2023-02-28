@@ -1,0 +1,41 @@
+﻿@model Employement_Project_MVC.Models.Category
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>تاكيد الحذف</h2>
+
+<h3>هل تريد حذف هذا النوع؟</h3>
+<div>
+    <h4>بيانات النوع</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryDiscraption)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryDiscraption)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("العودة للقائمة", "Index")
+        </div>
+    }
+</div>

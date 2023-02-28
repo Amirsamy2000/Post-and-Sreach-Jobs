@@ -1,0 +1,149 @@
+﻿@model IEnumerable<Employement_Project_MVC.Models.Category>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+
+
+
+<div class="container_head">
+    <Center>
+        <div class="text_head">
+            <h1>مرحبا بيك عزيزي الزائر</h1>
+            <p class="lead"> مرحبا بيك  في فضاء البحث عن الوظائف في مختلف التخصصات اذا كنت باحث عن وظيفة ونشر الوظائف التي تريد  انجزها اذا كنت ناشر في اسرع وقت </p>
+        </div>
+        <p><a href="https://www.linkedin.com/in/amir-samy-a62865203/" class="btn btn-primary btn-block btn_learn">Learn more &raquo;</a></p>
+        <br /><br /><br />
+        <div class="sreachForm">
+            @using (Html.BeginForm("sreach", "Home", FormMethod.Post))
+            {
+                <input type="text" name="SreachName" id="SreachName" placeholder="ابحث هنا..." class="SreachName" style="padding-right:20px" />
+
+            }
+        </div>
+    </Center>
+
+</div>
+
+
+
+
+<div class="container ">
+    <center>
+        <div class="head_tex">
+             <h3>
+                 
+                 كافة الخدمات الإبداعية والاحترافية لتطوير وتنمية أعمالك
+             </h3>
+        </div>
+    </center>
+    <div class="row">
+        <div class="col-sm-3" style="background-image: url('../../Content/images/audio.jpg'); background-size: cover">
+            <a class="link_head" href="#صوتيات">
+                <span> صوتيات</span>
+            </a>
+        </div>
+        <div class="col-sm-3" style="background-image: url('../../Content/images/book.jpg'); background-size: cover">
+            <a class="link_head" href="#تدريب عن بعد">
+                <span> تدريب عن بعد</span>
+            </a>
+        </div>
+        <div class="col-sm-3" style="background-image: url('../../Content/images/bus.jpg'); background-size: cover">
+            <a class="link_head" href="#اعمال">
+                <span> اعمال</span>
+            </a>
+        </div>
+
+        <div class="col-sm-3" style="background-image: url('../../Content/images/des.jpg'); background-size: cover">
+            <a class="link_head"  href="#تصميم فديوهات">
+                <span>تصميم فديوهات</span>
+            </a>
+        </div>
+
+
+        <div class="col-sm-12" style="margin-top:10px;margin-bottom:10px"></div>
+        <div class="col-sm-3" style="background-image: url('../../Content/images/des2.jpg'); background-size: cover">
+            <a class="link_head"  href="#تصميم">
+                <span>تصميم</span>
+            </a>
+        </div>
+
+        <div class="col-sm-3" style="background-image: url('../../Content/images/deve.jpg'); background-size: cover">
+           <center>
+    <a class="link_head"  href="#برمجة وتطوير">
+        <span>برمجة وتطوير</span>
+    </a>
+</center>
+        </div>
+
+        <div class="col-sm-3" style="background-image: url('../../Content/images/trans.jpg'); background-size: cover">
+            <a class="link_head"  href="#كتابة وترجمة">
+                <span>كتابة وترجمة</span>
+            </a>
+        </div>
+
+        <div class="col-sm-3" style="background-image: url('../../Content/images/ts.jpg'); background-size: cover">
+            <a class="link_head"  href="#التسويق">
+                <span>التسويق </span>
+            </a>
+        </div>
+
+
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    int i = 0;
+<div class="panel panel-info" id="@item.CategoryName">
+
+    <div class="panel-heading"><h1>خدمات @item.CategoryName</h1></div>
+
+    <center class="">        @Html.ActionLink("عرض جميع الوظائف", "Sreiveces", "Home", new { id = item.Id }, new { @class = "btn  btn-block btn_show" })</center>
+
+    <div class="row panel panel-body">
+        <center class="head_tex"><h4> @item.CategoryDiscraption</h4></center>
+        <div class="container">
+
+
+            <div class="Row">
+
+
+                @foreach (var subitem in item.Jobs)
+                {
+
+                    i++;
+
+                    if (i <= 4)
+                    {
+                        <div class="col-sm-3 div_body">
+                            <img src="~/Uploads/@subitem.JobImage" class="image_job_desin" width="300" height="100" />
+                            <p>@subitem.SreachEngigJob</p>
+                            <div class="header_job">@item.CategoryName / @subitem.JobTtile</div>
+                            <h4>تبدا من :@subitem.MinPrice$ الي :@subitem.MaxPrice$ </h4>
+                            @Html.ActionLink("تفاصيل", "Details", new { id = subitem.Id }, new { @class = "btn btn-primary" })
+
+
+                        </div>
+                    }
+
+
+
+
+
+                }
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+}
+
+
+
