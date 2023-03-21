@@ -71,12 +71,18 @@
 </div>
 
 <script>
+    function Delete(event) {
+        var conf = confirm("هل تريد حذف هذة الوظيفة؟")
+        if (conf === true) {
+            event.preventDefault();
+        }
+    }
    
     function ClearResult() {
         document.getElementById("EmployeeDiv").innerHTML = ""
     }
     function succ() {
-        window.scrollBy(0, document.body.scrollHeight)
+        window.scrollBy(0, 200)
         document.getElementById("LoadingApplies").style.display="none"
     }
     function CancelResult() {
@@ -135,8 +141,9 @@
         for (let i = 0; i < all_divs.length; i++) {
 
             all_divs[i].onclick = function () {
+
                 document.getElementById("Applies").innerHTML = " ";
-               
+                window.scrollTo(0, 0)
                 $.ajax({
                     url: "/Profile/DataJobs",
                     data: { id: Number(all_divs[i].getAttribute("id")) },
@@ -165,7 +172,7 @@
                                         " <h4> السعر:" + row.MinPrice + "$" + "/" + row.MaxPrice + "$" + "</h4>" +
                                         "  <center style='margin-bottom: 8px'>" +
                                         " <a class='btn btn-warning' href='/Jobs/Edit/" + row.Id + "'>تعديل</a>" +
-                                        " <a class='btn btn-danger' href='/Jobs/Delete/" + row.Id + "'>حذف</a>" +
+                                        " <a  class='btn btn-danger' href='/Jobs/Delete/" + row.Id + "'>حذف</a>" +
 
                                         //"<a data-ajax='true' data-ajax-loading='LoadingApplies' data-ajax-method='Get' data-ajax-mode='replace' data-ajax-update='#Applies' href = '/Profile/AppliesForJob_Profile' > المتقدمين</a >"
 

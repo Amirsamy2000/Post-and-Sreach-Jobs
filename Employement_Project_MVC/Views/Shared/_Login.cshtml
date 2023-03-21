@@ -37,18 +37,22 @@
                                     {
 
 
-                                        <a href="/Home/GetJobPublisher" class="btn btn-success btn-block">الوظائف التي قمت بنشرها</a>
+
                                         <a href="/Jobs/Create" class="btn btn-success btn-block">نشر وظيفة جديدة</a>
                                         <a href="~/Profile/Publisher/@currentUser.Id" class="btn btn-success btn-block">الملف الشخصي</a>
+                                    }
+                                    else if (currentUser.UserType == "admins")
+                                    {
+                                       
+                                        <a href="~/admin/admin" class="btn btn-success btn-block">الملف الشخصي</a>
                                     }
                                     else
                                     {
 
-                                        <a href="/Home/GetJob" class="btn btn-success btn-block">الوظائف التي قدمت اليها</a>
                                         <a href="/Home/index" class="btn btn-success btn-block">عرض وظائف الحاليه</a>
                                         <a href="~/Profile/SreacherProfile/@currentUser.Id" class="btn btn-success btn-block">الملف الشخصي</a>
                                     }
-                                    <a href="~/Account/EditUserProfile" class="btn btn-primary btn-block">تعديل الحساب</a>
+                                    <a href="~/Account/EditUserProfile/@currentUser.Id" class="btn btn-primary btn-block">تعديل الحساب</a>
 
                                 </div>
 

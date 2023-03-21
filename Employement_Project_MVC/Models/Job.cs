@@ -19,7 +19,7 @@ namespace Employement_Project_MVC.Models
         [Range(5,10 ,ErrorMessage ="لا يجب ان يزيد السر 10 او ينقص عن5")]
         public int  MinPrice { set; get; }
         [Required]
-        [Display(Name = "السعر ")]
+        [Display(Name = "الي ")]
         [Range(10, 1000, ErrorMessage = "لا يجب ان يزيد السر 1000 او ينقص عن10")]
         public int MaxPrice { get; set; }
         public int Id { get; set; }

@@ -57,6 +57,8 @@ namespace Employement_Project_MVC.Controllers
 
         //
         // GET: /Account/Login
+
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -193,6 +195,8 @@ namespace Employement_Project_MVC.Controllers
         [Authorize]
         public ActionResult EditUserProfile(string id)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             ViewBag.UserType = new SelectList(db.Roles.Where(x => !x.Name.Contains("admins")).ToList(), "Name", "Name");
 
             ViewBag.Country = new SelectList(new[] { "مصر", "الامارات", "الكويت", "السعودية", "اخري" });
@@ -210,6 +214,8 @@ namespace Employement_Project_MVC.Controllers
         [HttpPost]
         public ActionResult EditUserProfile(ApplicationUser user, string CurrentPassword, string NewPassword, string code, HttpPostedFileBase imageEdit)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             ViewBag.UserType = new SelectList(db.Roles.Where(x => !x.Name.Contains("admins")).ToList(), "Name", "Name");
 
             ViewBag.Country = new SelectList(new[] { "مصر", "الامارات", "الكويت", "السعودية", "اخري" });
@@ -231,7 +237,15 @@ namespace Employement_Project_MVC.Controllers
                 }
                 db.Entry(olduser).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index","Home");
+                if (ViewBag.Role == "admins")
+                {
+                    return RedirectToAction("admin", "admin");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+
+                }
 
             }
             else {

@@ -10,4 +10,5 @@ namespace Employement_Project_MVC.Models
         public string  Id  { get; set; }
         public string Name { get; set; }
     }
+
 }

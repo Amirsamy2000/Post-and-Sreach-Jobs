@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Employement_Project_MVC.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Employement_Project_MVC.Controllers
 {
@@ -25,6 +26,8 @@ namespace Employement_Project_MVC.Controllers
         // GET: Categories/Details/5
         public ActionResult Details(int? id)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -40,6 +43,8 @@ namespace Employement_Project_MVC.Controllers
         // GET: Categories/Create
         public ActionResult Create()
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             return View();
         }
 
@@ -50,19 +55,27 @@ namespace Employement_Project_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,CategoryName,CategoryDiscraption")] Category category)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             if (ModelState.IsValid)
             {
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                
 
+                    return RedirectToAction("admin", "admin");
+
+               
+            }
+            
             return View(category);
         }
 
         // GET: Categories/Edit/5
         public ActionResult Edit(int? id)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -82,11 +95,18 @@ namespace Employement_Project_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,CategoryName,CategoryDiscraption")] Category category)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             if (ModelState.IsValid)
             {
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                
+
+                    return RedirectToAction("admin", "admin");
+
+                
+                
             }
             return View(category);
         }
@@ -94,6 +114,8 @@ namespace Employement_Project_MVC.Controllers
         // GET: Categories/Delete/5
         public ActionResult Delete(int? id)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -111,10 +133,16 @@ namespace Employement_Project_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             Category category = db.Categories.Find(id);
             db.Categories.Remove(category);
             db.SaveChanges();
-            return RedirectToAction("Index");
+           
+
+                return RedirectToAction("admin", "admin");
+
+           
         }
 
         protected override void Dispose(bool disposing)

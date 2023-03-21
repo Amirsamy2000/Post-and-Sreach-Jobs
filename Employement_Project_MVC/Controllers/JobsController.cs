@@ -27,6 +27,7 @@ namespace Employement_Project_MVC.Controllers
         // GET: Jobs/Details/5
         public ActionResult Details(int? id)
         {
+           
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -44,6 +45,8 @@ namespace Employement_Project_MVC.Controllers
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName");
+           var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             return View();
         }
 
@@ -54,6 +57,8 @@ namespace Employement_Project_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Job job, HttpPostedFileBase upload)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             if (ModelState.IsValid)
             {
                 string filename = Guid.NewGuid() + upload.FileName;
@@ -63,7 +68,16 @@ namespace Employement_Project_MVC.Controllers
                 job.UaerID = User.Identity.GetUserId();
                 db.Jobs.Add(job);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ViewBag.Role == "admins")
+                {
+
+                    return RedirectToAction("admin","admin");
+
+                }
+                else
+                {
+                    return RedirectToAction("Publisher", "profile", new {Id=userId});
+                }
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", job.CategoryId);
@@ -73,6 +87,8 @@ namespace Employement_Project_MVC.Controllers
         // GET: Jobs/Edit/5
         public ActionResult Edit(int? id)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -94,6 +110,8 @@ namespace Employement_Project_MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Job job, HttpPostedFileBase upload)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             if (ModelState.IsValid)
             {
                
@@ -112,40 +130,67 @@ namespace Employement_Project_MVC.Controllers
                 
                 db.Entry(job).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ViewBag.Role == "admins")
+                {
+
+                    return RedirectToAction("admin", "admin");
+
+                }
+                else
+                {
+                    return RedirectToAction("Publisher", "profile", new { Id = userId });
+                }
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "CategoryName", job.CategoryId);
             return View(job);
         }
 
         // GET: Jobs/Delete/5
+        [HttpGet]
         public ActionResult Delete(int? id)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Job job = db.Jobs.Find(id);
-            if (job == null)
+            else
             {
-                return HttpNotFound();
+                Job job = db.Jobs.Find(id);
+
+                return View(job);
             }
-            return View(job);
+            
+          
         }
 
-        // POST: Jobs/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Job job = db.Jobs.Find(id);
-            db.Jobs.Remove(job);
-            db.SaveChanges();
 
-                return RedirectToAction("Index","Home");
            
+            var job = db.Jobs.Find(id);
+                db.Jobs.Remove(job);
+                db.SaveChanges();
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
 
-            
+            if (ViewBag.Role == "admins")
+            {
+
+                return RedirectToAction("admin", "admin");
+
+            }
+            else
+            {
+                return RedirectToAction("Publisher", "Profile", new { Id = userId });
+
+            }
+
+
         }
 
         protected override void Dispose(bool disposing)

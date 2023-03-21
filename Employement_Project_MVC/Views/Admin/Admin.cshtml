@@ -1,0 +1,173 @@
+﻿@model Employement_Project_MVC.Models.ApplicationUser
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Admin</title>
+    
+</head>
+<body>
+    <div class="row">
+        <div class="col-sm-3" style="background-color:white;padding:6px">
+            <div class="data_admin">
+                <img src="~/Uploads/avater.jpg" class="avater_admin" />
+
+                <h4>@Model.Email</h4>
+                <h5>@Model.UserName</h5>
+                <h5>@Model.PhoneNumber</h5>
+                <h5>@Model.Country</h5>
+                <a class="btn btn-warning " href="/Account/EditUserProfile/@Model.Id">Edit Profile</a>
+            </div>
+
+
+            <hr />
+            <div class="action">
+                <center>
+                    <a class="Action_Link" id="btn_DisplayR">Display Roles</a>
+                    <a class="Action_Link" href="/Roles/Create">Create New Role</a>
+                </center>
+            </div>
+            <div class="action">
+                <center>
+                    <a class="Action_Link" id="Job_Data">Display Jobs</a>
+                    <a class="Action_Link" href="/Jobs/Create">Create New Job</a>
+                </center>
+            </div>
+            <div class="action">
+                <center>
+                    <a class="Action_Link" id="D_Cats">Display Category</a>
+                    <a class="Action_Link" href="/Categories/Create"> Create Category</a>
+                </center>
+            </div>
+
+        </div>
+        <div class="col-sm-9 " id="data">
+            <div class="col-sm-12" style="background-color: white;  justify-content: center; align-items: center; display: flex ;padding-top:5px;padding-bottom:5px">
+
+                <div class="Div_ri col-sm-3">
+                    <div style=" text-align: center; justify-content: center; align-items: center; display: block;">
+                        <p>عدد المستخدمين الموقع</p>
+                        <p>@ViewBag.all </p>
+                    </div>
+                </div>
+
+                <div class="Div_in col-sm-3">
+                    <div style=" text-align: center; justify-content: center; align-items: center; display: block;">
+                        <p>عدد الناشرين</p>
+                        <p>@ViewBag.Publisher</p>
+                    </div>
+                </div>
+                <div class="Div_le col-sm-3">
+                    <div style=" text-align: center; justify-content: center; align-items: center; display: block;">
+                        <p>عدد الباحثين  </p>
+                        <p>@ViewBag.sreacher</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12" style="background-color: white;  justify-content: center; align-items: center; display: flex ;padding-top:5px;padding-bottom:5px;margin-top:10px">
+
+                <div class="Div_ri col-sm-3">
+                    <div style=" text-align: center; justify-content: center; align-items: center; display: block;">
+                        <p>عدد الفئات </p>
+                        <p>@ViewBag.cats  </p>
+                        <p><a class="btn btn-success btn-block">Add New Category</a></p>
+                    </div>
+                </div>
+
+                <div class="Div_in col-sm-3">
+                    <div style=" text-align: center; justify-content: center; align-items: center; display: block;">
+                        <p>عدد  الوظائف المنشورة</p>
+                        <p>@ViewBag.Jobs</p>
+                        <p><a class="btn btn-success btn-block" href="/Jobs/Create">Add New Job</a></p>
+
+                    </div>
+                </div>
+                <div class="Div_le col-sm-3">
+                    <div style=" text-align: center; justify-content: center; align-items: center; display: block;">
+                        <p>عدد المتقدمين  </p>
+                        <p>@ViewBag.applies</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12" style="background-color: white;padding-top:5px;padding-bottom:5px;margin-top:10px">
+                <div class="panel panel-body panel-info">
+                    <center>
+                        عرض كل فئة والعدد الوظائف الخاصة بهذة الفئة
+
+                    </center>
+
+                </div>
+                <hr />
+                @foreach (var item in ViewBag.AllCats)
+                {
+            <div class="col-sm-12 " style="background-color: ghostwhite; padding: 20px; margin-top: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);">
+                <div class="col-sm-12">
+                    <div class="panel panel-body panel-danger" style="  color:black;font-weight:bold;margin:5px">
+                        <center>
+                            @item.CategoryDiscraption
+                        </center>
+                    </div>
+                </div>
+                <div class="Cats_Admin">
+                    <p class="p_cats1">@item.CategoryName</p>
+                    <p class="p_cats2">@item.Jobs.Count</p>
+                </div>
+            </div>
+                    
+                }
+            </div>
+
+        </div>
+        <script src="~/Scripts/jquery-3.4.1.js"></script>
+       <script>
+           $("#btn_DisplayR").click(function () {
+                       $("#data").html();
+                       $.ajax({
+                           url: "/Admin/AllRoles",
+                           type: "Get",
+                           data: {},
+                           success: function (res) {
+                               $("#data").html(res);
+
+                           }
+
+                       });
+
+           });
+
+                   $("#Job_Data").click(function () {
+                       $("#data").html();
+                       $.ajax({
+                           url: "/Jobs/Index",
+                           type: "Get",
+                           data: {},
+                           success: function (res) {
+                               $("#data").html(res);
+                           }
+
+                       });
+                   });
+
+           $("#D_Cats").click(function () {
+               $("#data").html();
+
+               $.ajax({
+                   url: "/Categories/Index",
+                   type: "Get",
+                   success: function(res){
+                       $("#data").html(res);
+                  }
+
+               })
+
+           });
+
+
+       </script>
+
+</body>
+
+</html>

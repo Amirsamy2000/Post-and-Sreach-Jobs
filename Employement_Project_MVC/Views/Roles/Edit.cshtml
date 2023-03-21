@@ -1,31 +1,48 @@
 ﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>RoleViewModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+<center>
+    <div class="panel panel-body panel-info" style="width:50%;margin-top:60px" >
+        <center>
+            <h4>Now You Can Update Role</h4>
+            <img src="~/Uploads/Update.jpg" style="width:200px;height:200px;border-radius:50%" />
+            <br />
+            <br />
+            <div class="col-sm-12" style="background-color: azure; padding: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); ">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-horizontal">
+                        <h4>
+                            You Can Chage Only  Name Of Role
+                        </h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Update" class="btn btn-success" />
+                                |<a href="/Admin/Admin" class="btn btn-info">Back !</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
             </div>
-        </div>
+        </center>
     </div>
-}
-
-<div>
+    <br />
+ 
+</center>
+@*<div>
     @Html.ActionLink("Back to List", "Index")
-</div>
+</div>*@

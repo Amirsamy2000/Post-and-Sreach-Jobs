@@ -5,42 +5,65 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
-<h2>تعديل النوع</h2>
+<center>
+    <div class="panel panel-body" style="width:60%;margin-top:60px" >
+        <center>
+            <h3>ستقوم بتغير بيانات الفئة </h3>
+            <p>ملاحظة : ستم تطبيق التغير علي التعديل عل جميع الوظائف الموجودة </p>
+          
+            <img src="~/Uploads/Update.jpg" style="width:200px;height:200px;border-radius:50%" />
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>تفاصيل النوع</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+            <br />
+            <br />
+        </center>
+        <div class="col-sm-12" style="background-color: azure; padding: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);">
+            
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
-            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>تفاصيل النوع</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CategoryDiscraption, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CategoryDiscraption, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CategoryDiscraption, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="حفظ" class="btn btn-default" />|
+                            @if (ViewBag.Role == "admins")
+                            {
+
+                                <a class="btn btn-info" href="/Admin/Admin">Back!</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-info" href="">Back!</a>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryDiscraption, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryDiscraption, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CategoryDiscraption, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="حفظ" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
+</center>
 
-<div>
-    @Html.ActionLink("العودة للقائمة", "Index")
-</div>

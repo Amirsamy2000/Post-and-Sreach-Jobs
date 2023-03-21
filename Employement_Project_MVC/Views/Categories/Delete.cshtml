@@ -5,37 +5,57 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
-<h2>تاكيد الحذف</h2>
+<center>
+   <div class="panel panel-body" style="width:60%;margin-top:60px">
+       <center>
+           <h2>تاكيد الحذف</h2>
 
-<h3>هل تريد حذف هذا النوع؟</h3>
-<div>
-    <h4>بيانات النوع</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </dt>
+           <h3>هل تريد حذف هذا النوع؟</h3>
+           <img src="~/Uploads/Delete.png" style="width:200px;height:200px;border-radius:50%" />
+           <br />
+           <div>
+               <h4>بيانات النوع</h4>
+               <hr />
+               <div class="col-sm-12" style="background-color: azure; padding: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);">
+                   <dl class="dl-horizontal">
+                       <dt>
+                           @Html.DisplayNameFor(model => model.CategoryName)
+                       </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CategoryName)
-        </dd>
+                       <dd>
+                           @Html.DisplayFor(model => model.CategoryName)
+                       </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CategoryDiscraption)
-        </dt>
+                       <dt>
+                           @Html.DisplayNameFor(model => model.CategoryDiscraption)
+                       </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CategoryDiscraption)
-        </dd>
+                       <dd>
+                           @Html.DisplayFor(model => model.CategoryDiscraption)
+                       </dd>
 
-    </dl>
+                   </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+                   @using (Html.BeginForm())
+                   {
+                       @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("العودة للقائمة", "Index")
-        </div>
-    }
-</div>
+                       <div class="form-actions no-color">
+                           <input type="submit" value="Delete" class="btn btn-danger" /> |
+                           @if (ViewBag.Role == "admins")
+                           {
+
+                               <a class="btn btn-info" href="/Admin/Admin">Back!</a>
+                           }
+                           else
+                           {
+                               <a class="btn btn-info" href="">Back!</a>
+                           }
+                       </div>
+                   }
+               </div>
+           </div>
+
+       </center>
+   </div>
+</center>

@@ -45,7 +45,7 @@ namespace Employement_Project_MVC.Controllers
                 {
                    db.Roles.Add(role);
                    db.SaveChanges();
-                   return RedirectToAction("Index");
+                   return RedirectToAction("Admin","Admin");
                 }
                 return View(role);
 
@@ -72,7 +72,7 @@ namespace Employement_Project_MVC.Controllers
             {
                 db.Entry(role).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("admin","admin");
             }
             return View(role);
         }
@@ -99,7 +99,7 @@ namespace Employement_Project_MVC.Controllers
                 db.Roles.Remove(myrole);
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("admin","admin");
             }
             catch
             {

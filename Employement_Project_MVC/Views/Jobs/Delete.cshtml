@@ -1,58 +1,46 @@
 ﻿@model Employement_Project_MVC.Models.Job
-
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
-<h2>تاكيد الحذف</h2>
 
-<h3>هل تريد حذف هذةالوظيفة</h3>
-<div>
-    <h4>الوظيفة</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.cat.CategoryName)
-        </dt>
+<div class="Contianer_Detials">
+    <div class="container">
+        <div class="Row">
+            <div class="panel panel-info panel_detials">
+                <h2>@Model.SreachEngigJob</h2>
+                <p>@Model.cat.CategoryName/@Model.JobTtile </p>
+            </div>
+            <hr />
+            <div class="col-sm-9 detials_div ">
+                <div class="">
 
-        <dd>
-            @Html.DisplayFor(model => model.cat.CategoryName)
-        </dd>
+                    <img src="~/Uploads/@Html.DisplayFor(model => model.JobImage) " class="detials_img" />
+                    <hr />
+                    <hr />
+                    <p>@Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => model.JobContent).ToString()))</p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.JobTtile)
-        </dt>
+                    @using (Html.BeginForm("Delete", "Jobs", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Id)
+                        <center><input class="btn-danger btn-block" type="submit" value="حذف" /></center>
+                        if (ViewBag.Role == "admins")
+                        {
 
-        <dd>
-            @Html.DisplayFor(model => model.JobTtile)
-        </dd>
+                            <a class="btn btn-info" href="/Admin/Admin">Back!</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-info" href="~/Jobs/Index">Back!</a>
+                        }
+                    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.JobContent)
-        </dt>
-
-        <dd>
-          @Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => model.JobContent).ToString()))
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.JobImage)
-        </dt>
-
-        <dd>
-            <img src="~/Uploads/@Html.DisplayFor(model => model.JobImage)" class="thumbnail" style="width:50px;height:50px" />
-
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("العودة للقائمة", "Index")
+                </div>
+            </div>
+          
         </div>
-    }
+    </div>
+
 </div>

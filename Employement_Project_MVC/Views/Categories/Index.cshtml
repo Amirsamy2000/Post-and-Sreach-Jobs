@@ -2,39 +2,48 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    Layout =null;
 }
 
 <h2>قائمة الوظائف</h2>
 
-<p>
-    @Html.ActionLink("انشاء نوع جديد", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryDiscraption)
-        </th>
-        <th></th>
-    </tr>
+<center>
+    <div class="panel panel-body ">
+        <div class="col-sm-12" style="background-color: azure; padding: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);">
+            <p>
+                <a class="btn btn-success" href="/Categories/Create">Create</a>
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CategoryName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CategoryDiscraption)
+                    </th>
+                    <th></th>
+                </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryDiscraption)
-        </td>
-        <td>
-            @Html.ActionLink("تعديل", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("تفاصيل", "Details", new { id=item.Id }) |
-            @Html.ActionLink("حذف", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryDiscraption)
+                        </td>
+                        <td>
+                            <a class="btn btn-warning btn-block" href="/Categories/Edit/@item.Id">Edit</a>
+                            <a class="btn btn-danger btn-block" href="/Categories/Delete/@item.Id">Delete</a>
+  
+                        </td>
+                    </tr>
+                }
 
-</table>
+            </table>
+
+        </div>
+
+    </div>
+</center>

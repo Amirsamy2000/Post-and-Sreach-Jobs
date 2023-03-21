@@ -5,88 +5,126 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 <script src="~/Scripts/ckeditor/ckeditor.js"></script>
-<h2>انشاء وظيفة</h2>
 
-@using (Html.BeginForm("Create", "Jobs", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+<div class="container" style="justify-items:center">
 
-<div class="form-horizontal">
-    <div class="alert alert-danger" id="erro" style="display:none">
-        <span id="view-erro"></span>
-    </div>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.JobTtile, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.JobTtile, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.JobTtile, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <p id="text"></p>
-    <div class="form-group">
-        @Html.LabelFor(model => model.SreachEngigJob, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.SreachEngigJob, new { htmlAttributes = new { @class = "form-control", id = "TitleSreach" } })
-            @Html.ValidationMessageFor(model => model.SreachEngigJob, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    <center>
+        <div class="row"> 
+            
+            <div class="col-sm-6" id="CreateNewJob">
+                <div class="panel-body panel-info">
+                    <center>
+                        <h4>
+                            ستقوم بنشر وظيفة جديدة لجميع المستخدمين
+                        </h4>
+                        <br />
+                        <h5>يمكنك بعد النشر متابعة و رؤية المتقدمين للوظيفة</h5>
+                    </center>
+                </div>
+                @using (Html.BeginForm("Create", "Jobs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.JobContent, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.JobContent, new { htmlAttributes = new { @class = "form-control", id = "JobContent" } })
-            @Html.ValidationMessageFor(model => model.JobContent, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                    <div class="form-horizontal">
+                        <div class="alert alert-danger" id="erro" style="display:none">
+                            <span id="view-erro"></span>
+                        </div>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.JobTtile, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.JobTtile, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.JobTtile, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <p id="text"></p>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SreachEngigJob, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.SreachEngigJob, new { htmlAttributes = new { @class = "form-control", id = "TitleSreach" } })
+                                @Html.ValidationMessageFor(model => model.SreachEngigJob, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.JobImage, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="upload" class="form-control" id="image" />
-            @*@Html.EditorFor(model => model.JobImage, new { htmlAttributes = new { @class = "form-control" } })*@
-            @Html.ValidationMessageFor(model => model.JobImage, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.MinPrice, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-4">
-            @Html.TextBoxFor(model => model.MinPrice, new { @class = "form-control", type = "number" })
-            @Html.ValidationMessageFor(model => model.MinPrice, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.JobContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.JobContent, new { htmlAttributes = new { @class = "form-control", id = "JobContent" } })
+                                @Html.ValidationMessageFor(model => model.JobContent, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        </div>
-        <div class="form-group">
-            @Html.Label("الي", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.TextBoxFor(model => model.MaxPrice, new { @class = "form-control", type = "number" })
-                @Html.ValidationMessageFor(model => model.MaxPrice, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.JobImage, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="file" name="upload" class="form-control" id="image" />
+                                @*@Html.EditorFor(model => model.JobImage, new { htmlAttributes = new { @class = "form-control" } })*@
+                                @Html.ValidationMessageFor(model => model.JobImage, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MinPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.MinPrice, new { htmlAttributes = new { @class = "form-control", id = "TitleSreach" } })
+                                @Html.ValidationMessageFor(model => model.MinPrice, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MaxPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.MaxPrice, new { htmlAttributes = new { @class = "form-control", id = "TitleSreach" } })
+                                @Html.ValidationMessageFor(model => model.MaxPrice, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CategoryId, "نوع الوظيفة", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="col-sm-5">
+                            <input type="submit" value="حفظ" class="btn btn-success btn-block" id="checkImage" />
+
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <div class="col-sm-12">
+                            @if (ViewBag.Role == "admins")
+                            {
+
+                                <a class="btn btn-info" href="/Admin/Admin">Back!</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-info" href="~/Jobs/Index">Back!</a>
+                            }
+                
+
+                        </div>
+
+                    </div>
+                    <br />
+                    <br />
+
+
+
+                }
+
+
+
+
             </div>
-        </div>
 
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.CategoryId, "نوع الوظيفة", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </center>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-3">
-            <input type="submit" value="حفظ" class="btn btn-success btn-block"  id="checkImage" />
-        </div>
-    </div>
 </div>
-}
-
-<div class="back">
-    <a href="~/Jobs/Index" class="btn btn-danger btn-block">العودة للقائمة</a>
-   
-</div>
-
-
     <script>
      
        var listEx=['png','jpg','gif','bmp']

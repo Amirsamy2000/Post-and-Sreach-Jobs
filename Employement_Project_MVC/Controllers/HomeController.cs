@@ -64,6 +64,8 @@ namespace Employement_Project_MVC.Controllers
 
         public ActionResult Details(int? id)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = Db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
 
             var job = Db.Jobs.Find(id);
             if (job == null)
@@ -153,6 +155,8 @@ namespace Employement_Project_MVC.Controllers
         }
         public ActionResult Edit(int id)
         {
+                        var userId = User.Identity.GetUserId();
+            ViewBag.Role = Db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             var job = Db.ApplayForJobs.Find(id);
             if (job == null)
             {
@@ -166,6 +170,8 @@ namespace Employement_Project_MVC.Controllers
         [HttpPost]
         public ActionResult Edit(ApplayForJob job)
         {
+            var userId = User.Identity.GetUserId();
+            ViewBag.Role = Db.Users.Where(x => x.Id == userId).Select(x => x.UserType).FirstOrDefault();
             if (ModelState.IsValid)
             {
 
