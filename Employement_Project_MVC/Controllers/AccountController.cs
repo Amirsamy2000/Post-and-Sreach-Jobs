@@ -230,7 +230,7 @@ namespace Employement_Project_MVC.Controllers
                 {
                     string PathNewImage = Guid.NewGuid() + imageEdit.FileName;
                     string NewImage = Path.Combine(Server.MapPath("~/Uploads/") + PathNewImage);
-                    string oldImage = Path.Combine(Server.MapPath("~/Uploads/"), olduser.PathImage);
+                    string oldImage = Path.Combine(Server.MapPath("~/Uploads/") +olduser.PathImage);
                     System.IO.File.Delete(oldImage);
                     imageEdit.SaveAs(NewImage);
                     olduser.PathImage = PathNewImage;

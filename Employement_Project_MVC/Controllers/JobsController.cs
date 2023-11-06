@@ -117,11 +117,11 @@ namespace Employement_Project_MVC.Controllers
                
                 if (upload != null)
                 {
-                    string pathold = Path.Combine(Server.MapPath("~/Uploads"), job.JobImage);
+                    string pathold = Path.Combine(Server.MapPath("~/Uploads/"), job.JobImage);
 
                     System.IO.File.Delete(pathold);
                     string filename = Guid.NewGuid() + upload.FileName;
-                    string path = Path.Combine(Server.MapPath("~/Uploads"), filename);
+                    string path = Path.Combine(Server.MapPath("~/Uploads/"), filename);
                     upload.SaveAs(path);
                     job.JobImage = filename;
                 

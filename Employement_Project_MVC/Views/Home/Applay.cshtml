@@ -7,82 +7,91 @@
 <script src="~/Scripts/ckeditor/ckeditor.js"></script>
 
 
-<div class="container" style="justify-items:center">
-    <center>
-        <div class="row">
-            <div class="col-sm-6" id="CreateNewJob">
-                <div class="panel-body panel-info">
+<center>
+    <div class="panel panel-body" style="background-color: azure; padding: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); width:60%" >
+     
+            <div class="col-sm-12" >
+                
                     <center>
-                        <h4>
-                            ستقوم بالتقديم علي هذة الوظيفة عند ملئ جميع البيانات المطلوبة
-                        </h4>
-                        <br />
-                        <h5>يمكنك بعد التقديم الرجوع فيه او حذف التقديم </h5>
-                        <h5>لا تستطيع التقديم مرتين   </h5>
-                        <h5>لا تستطيع التقديم  اذا كنت انت ناشر الوظيفة </h5>
+                        <div class="row">
+                            <div class="col-sm-6" id="CreateNewJob">
+                                <div class="panel-body panel-info">
+                                    <center>
+                                        <h4>
+                                            ستقوم بالتقديم علي هذة الوظيفة عند ملئ جميع البيانات المطلوبة
+                                        </h4>
+                                        <br />
+                                        <h5>يمكنك بعد التقديم الرجوع فيه او حذف التقديم </h5>
+                                        <h5>لا تستطيع التقديم مرتين   </h5>
+                                        <h5>لا تستطيع التقديم  اذا كنت انت ناشر الوظيفة </h5>
+                                    </center>
+                                </div>
+                                @using (Html.BeginForm("Applay", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+
+                                    <div class="form-horizontal">
+
+                                        <div class="alert alert-danger" id="erro" style="display:none">
+                                            <center>        <span id="view-erro"></span></center>
+                                        </div>
+                                        <div class="alert alert-success" id="erro">
+                                            <center>        <span id="view-erro">@ViewBag.result</span></center>
+                                        </div>
+                                        <hr />
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger", enctype = "multipart/form-data" })
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.CvApplay, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                <input type="file" name="CV" id="CV" value="قم برفع السيرة الذاتية" class="form-control" />
+                                                @Html.ValidationMessageFor(model => model.CvApplay, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextAreaFor(model => model.Message, new { id = "message" })
+                                                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.LinksGlary, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.LinksGlary, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.LinksGlary, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+
+                                        <center>
+                                            <input type="submit" value="ارسال" class="btn btn-success " id="checkCv" />
+                                            <br />
+                                            <br />
+                                            <a href="~/Jobs/Index" class="btn btn-danger btn-block">العودة للقائمة</a>
+
+                                        </center>
+
+
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
                     </center>
                 </div>
-                @using (Html.BeginForm("Applay", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @Html.AntiForgeryToken()
-
-
-                    <div class="form-horizontal">
-
-                        <div class="alert alert-danger" id="erro" style="display:none">
-                            <center>        <span id="view-erro"></span></center>
-                        </div>
-                        <div class="alert alert-success" id="erro">
-                            <center>        <span id="view-erro">@ViewBag.result</span></center>
-                        </div>
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger", enctype = "multipart/form-data" })
-
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CvApplay, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <input type="file" name="CV" id="CV" value="قم برفع السيرة الذاتية" class="form-control" />
-                                @Html.ValidationMessageFor(model => model.CvApplay, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.Message, new { id = "message" })
-                                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LinksGlary, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.LinksGlary, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.LinksGlary, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-
-                        <center>
-                            <input type="submit" value="ارسال" class="btn btn-success " id="checkCv" />
-                            <br />
-                            <br />
-                            <a href="~/Jobs/Index" class="btn btn-danger btn-block">العودة للقائمة</a>
-
-                        </center>
-
-
-                    </div>
-                }
-
 
             </div>
-        </div>
-    </center>
-</div>
+        
+  
+</center>
 
         <script>
             document.getElementById("checkCv").onclick = function (event) {

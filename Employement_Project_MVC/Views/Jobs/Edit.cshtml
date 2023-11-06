@@ -18,7 +18,7 @@
                     <h5>بعد التعديل تفاصيل الوظيفة سيظهر التعديل لجميع المستخدمين وايضا المتقدمين علي الوظيفة  </h5>
                     </center>
                 </div>
-                @using (Html.BeginForm("Create", "Jobs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Edit", "Jobs", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
 
@@ -27,6 +27,7 @@
                             <span id="view-erro"></span>
                         </div>
                         <hr />
+                        @Html.HiddenFor(model=>model.UaerID)
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
                             @Html.LabelFor(model => model.JobTtile, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -37,6 +38,7 @@
                         </div>
                         <p id="text"></p>
                         <div class="form-group">
+
                             @Html.LabelFor(model => model.SreachEngigJob, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.SreachEngigJob, new { htmlAttributes = new { @class = "form-control", id = "TitleSreach" } })
@@ -51,6 +53,7 @@
                                 @Html.ValidationMessageFor(model => model.JobContent, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        @Html.HiddenFor(model => model.JobImage);
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.JobImage, htmlAttributes: new { @class = "control-label col-md-2" })
